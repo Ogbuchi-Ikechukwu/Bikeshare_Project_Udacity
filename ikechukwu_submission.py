@@ -17,7 +17,9 @@ def get_filters():
     """
     print('Hello! Let\'s explore some US bikeshare data!')
     # get user input for city (chicago, new york city, washington). HINT: Use a while loop to handle invalid inputs
+    global city
     city = input('Hi! Which of these cities do you want to get data from: Chicago, New York City, or Washington?\n').lower()
+   
     
     while city not in CITY_DATA.keys() :
         print('Sorry, the city is not among the options listed. Try again')
@@ -199,12 +201,23 @@ def main():
         station_stats(df)
         trip_duration_stats(df)
         user_stats(df)
+        display_data()
 
         restart = input('\nWould you like to restart? Enter yes or no.\n')
         if restart.lower() != 'yes':
             break
-
-
+#Adding the display data function as instructed by last reviewer. :)
+def display_data():
+    global city
+    df = pd.read_csv(CITY_DATA[city])
+    view_data = input("Would you like to view 5 rows of individual trip data? Enter yes or no?")
+    start_loc = 0
+    while (view_data=='yes'):
+        print(df.iloc[0:start_loc+5])
+        start_loc += 5
+        view_data = input("Do you wish to continue?: ").lower()
+        if view_data!='yes':
+            break
 if __name__ == "__main__":
 	main()
 
